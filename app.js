@@ -1,7 +1,8 @@
 import express from 'express'
 import morgan from 'morgan';
 import cors from 'cors';
-import clientsRouter from './routes/clients.js';
+import patientsRouter from './routes/patients.js';
+import carersRouter from './routes/carers.js';
 
 const app = express()
 const port = 3005
@@ -17,5 +18,6 @@ app.listen(port, () => {
 })
 
 // Routing
-app.use('/api/clients', clientsRouter);
+app.use('/api/patients', patientsRouter);
+app.use('/api/carers', carersRouter);
 
