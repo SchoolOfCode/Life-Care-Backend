@@ -7,6 +7,16 @@ import {
 
 const router = Router();
 
+// POST new patient note
+router.post("/:patient_id/notes", async function (req, res) {
+  // not sure if patient id needed
+  const note = await addNote(req.body);
+  res.json({
+    success: true,
+    payload: note,
+  });
+});
+
 // GET single patient's info
 router.get("/:patient_id", async function (req, res) {
   const patient = await getPatientByID(req.params.patient_id);
@@ -23,16 +33,6 @@ router.get("/:patient_id/notes", async function (req, res) {
   res.json({
     success: true,
     payload: notes,
-  });
-});
-
-// POST new patient note
-router.post("/patients/:patient_id/notes", async function (req, res) {
-  // not sure if we need to pass in patient_id
-  const note = await addNote(req.body);
-  res.json({
-    success: true,
-    payload: note,
   });
 });
 
