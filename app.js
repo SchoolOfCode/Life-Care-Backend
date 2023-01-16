@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import patientsRouter from "./routes/patients.js";
 import carersRouter from "./routes/carers.js";
-// import { validateAccessToken } from "./auth0-middleware.js";
+
 
 const app = express();
 const port = 3005;
