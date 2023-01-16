@@ -30,3 +30,16 @@ test('it gets carers by ID', async()=> {
         console.log(error);
     }
 })
+
+test("Getting array of assigned patients", async()=>{
+    try {
+        const response = await supertest(app).get("/api/carers/:carer_id/patients")
+        expect(response.status).toBe(200);
+        expect (response.body).toStrictEqual({
+            success: true,
+            payload: expect.any(Array)
+        })
+    } catch (error){
+        console.log(error);
+    }
+})
