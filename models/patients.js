@@ -12,7 +12,6 @@ export async function getPatientByID(id) {
 }
 
 export async function getPatientsByCarerID(carer_id) {
-  console.log(carer_id);
   const results = await query(
     // `SELECT *
     // FROM patients

@@ -14,7 +14,6 @@ export async function getCarerByID(id) {
     [id]
     );
     const carer = results.rows[0];
-    console.log(carer);
     return carer;
 }
   
