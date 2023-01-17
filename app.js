@@ -13,6 +13,7 @@ app.use(cors("*"));
 app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.json());
+// add vaildation middleware here!
 
 app.listen(port, () => {
 	console.log(`app listening on port ${port}`);
