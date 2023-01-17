@@ -22,3 +22,6 @@ app.listen(port, () => {
 // Routing
 app.use("/api/patients", patientsRouter);
 app.use("/api/carers", carersRouter);
+
+
+export default app;
