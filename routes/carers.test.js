@@ -3,7 +3,7 @@ import supertest from "supertest";
 import app from "../app";
 
 
-test('it gets all the carers', async()=>{
+test.first('it gets all the carers', async()=>{
     
         const response = await supertest(app).get("/api/carers")
         expect(response.status).toBe(200);
