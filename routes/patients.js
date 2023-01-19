@@ -6,7 +6,6 @@ const router = Router();
 
 // POST new patient note
 router.post("/:patient_id/notes", validateAccessToken, async function (req, res) {
-	// not sure if patient id needed
 	const note = await addNote(req.body);
 	res.json({
 		success: true,
