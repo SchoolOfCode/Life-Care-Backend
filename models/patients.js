@@ -35,7 +35,7 @@ export async function getPatientsByCarerID(carer_id) {
 
 export async function getNotesByPatientID(patient_id) {
   const results = await query(
-    `SELECT type_note, text_content, time_of_input, has_been_seen
+    `SELECT content, incidents, additional, time_stamp, seen
     FROM notes
     WHERE patient_id = $1;`,
     [patient_id]
