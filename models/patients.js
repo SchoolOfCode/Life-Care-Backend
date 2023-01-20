@@ -37,7 +37,9 @@ export async function getNotesByPatientID(patient_id) {
   const results = await query(
     `SELECT *
     FROM notes
-    WHERE patient_id = $1;`,
+    WHERE patient_id = $1
+    ORDER BY note_id DESC;`,
+
     [patient_id]
   );
   const notesArr = results.rows;
