@@ -28,8 +28,53 @@ test("Getting a single patients information", async () => {
 
 test("Getting a single patients notes", async () => {
   const response = await supertest(app)
-    .get("/api/patient/:patient_id/notes")
+    .get("/api/patients/1/notes")
     .set("Authorization", `Bearer ${process.env.ACCESS_TOKEN}`);
+  expect(response.status).toBe(200);
+  expect(response.body).toStrictEqual({
+    success: true,
+    payload: expect.any(Array),
+  });
+  let patientNotesArray = response.body.payload;
+  for (let i = 0; i < patientNotesArray.length; i++) {
+    expect(patientNotesArray[i]).toStrictEqual({
+      note_id: expect.any(Number),
+      patient_id: expect.any(Number),
+      carer_id: expect.any(Number),
+      content: expect.any(String),
+      incidents: expect.any(String),
+      additional: expect.any(String),
+      time_stamp: expect.any(String),
+      first_name: expect.any(String),
+      last_name: expect.any(String),
+    });
+  }
+});
+
+// // Testing to see if we can add a note to a patient
+
+test("Adding a note to a patient", async () => {
+  const patient_id = 1;
+  const carer_id = 1;
+  const content = "He was doing to";
+  const incidents = "She fell over again";
+  const additional = "He's making good progress";
+  const time_stamp = "2022-10-23T23:00:00.000Z";
+
+  const response = await supertest(app)
+    .post("/api/patients/1/notes")
+
+    .set("Authorization", `Bearer ${process.env.ACCESS_TOKEN}`)
+
+    .send({
+      patient_id,
+      carer_id,
+      content,
+      incidents,
+      additional,
+      time_stamp,
+    });
+
   expect(response.status).toBe(200);
   expect(response.body).toStrictEqual({
     success: true,
@@ -41,29 +86,13 @@ test("Getting a single patients notes", async () => {
       incidents: expect.any(String),
       additional: expect.any(String),
       time_stamp: expect.any(String),
-      seen: expect.any(Boolean),
     },
   });
 });
 
-// // Testing to see if we can add a note to a patient
-
-// test("Adding a note to a patient", async () => {
-//     try {
-//         const response = await supertest(app).post("/api/patients/:patient_id/notes")
-//         expect(response.status).toBe(200);
-//         expect(response.body).toStrictEqual({
-//             success: true,
-//             payload: expect.any(Object)
-//         })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
 test("it returns an error when the access token is invalid", async () => {
   const response = await supertest(app)
-    .get("/api/carers")
+    .get("/api/patients")
     .set("Authorization", "Bearer invalid_access_token");
-  expect(response.status).toBe(401);
+  expect(response.status).toBe(404);
 });
