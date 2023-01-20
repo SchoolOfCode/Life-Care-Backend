@@ -35,9 +35,11 @@ export async function getPatientsByCarerID(carer_id) {
 
 export async function getNotesByPatientID(patient_id) {
   const results = await query(
-    `SELECT *
-    FROM notes
-    WHERE patient_id = $1;`,
+    `SELECT notes.*, carers.first_name, carers.last_name
+    FROM notes 
+    LEFT JOIN carers 
+    ON notes.carer_id = carers.carer_id
+    WHERE carers.carer_id = $1;`,
     [patient_id]
   );
   const notesArr = results.rows;
