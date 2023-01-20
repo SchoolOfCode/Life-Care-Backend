@@ -51,7 +51,7 @@ export async function getNotesByPatientID(patient_id) {
  */
 export async function addNote(NoteObj) {
   const result = await query(
-    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp, seen) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
+    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
     [
       NoteObj.patient_id,
       NoteObj.carer_id,
@@ -59,7 +59,6 @@ export async function addNote(NoteObj) {
       NoteObj.incidents,
       NoteObj.additional,
       NoteObj.time_stamp,
-      NoteObj.seen,
     ]
   );
   // const newNoteObj = {
