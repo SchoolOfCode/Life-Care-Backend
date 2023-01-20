@@ -35,11 +35,12 @@ export async function getPatientsByCarerID(carer_id) {
 
 export async function getNotesByPatientID(patient_id) {
   const results = await query(
-    `SELECT *
-    FROM notes
-    WHERE patient_id = $1
+    `SELECT notes.*, carers.first_name, carers.last_name
+    FROM notes 
+    LEFT JOIN carers 
+    ON notes.carer_id = carers.carer_id
+    WHERE carers.carer_id = $1
     ORDER BY note_id DESC;`,
-
     [patient_id]
   );
   const notesArr = results.rows;
@@ -51,7 +52,7 @@ export async function getNotesByPatientID(patient_id) {
  */
 export async function addNote(NoteObj) {
   const result = await query(
-    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp, seen) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
+    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
     [
       NoteObj.patient_id,
       NoteObj.carer_id,
@@ -59,7 +60,6 @@ export async function addNote(NoteObj) {
       NoteObj.incidents,
       NoteObj.additional,
       NoteObj.time_stamp,
-      NoteObj.seen,
     ]
   );
   // const newNoteObj = {
