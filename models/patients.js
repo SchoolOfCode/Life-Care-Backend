@@ -35,36 +35,34 @@ export async function getPatientsByCarerID(carer_id) {
 
 export async function getNotesByPatientID(patient_id) {
   const results = await query(
-    `SELECT type_note, text_content, time_of_input, has_been_seen
-    FROM notes
-    WHERE patient_id = $1;`,
+    `SELECT notes.*, carers.first_name, carers.last_name
+    FROM notes 
+    LEFT JOIN carers 
+    ON notes.carer_id = carers.carer_id
+    WHERE carers.carer_id = $1
+    ORDER BY note_id DESC;`,
     [patient_id]
   );
   const notesArr = results.rows;
   return notesArr;
 }
 
+/**
+ Return an object with the inserted values
+ */
 export async function addNote(NoteObj) {
   const result = await query(
-    `INSERT INTO notes (patient_id, carer_id, text_content, type_note, time_of_input, has_been_seen) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
     [
       NoteObj.patient_id,
       NoteObj.carer_id,
-      NoteObj.text_content,
-      NoteObj.type_note,
-      NoteObj.time_of_input,
-      NoteObj.has_been_seen,
+      NoteObj.content,
+      NoteObj.incidents,
+      NoteObj.additional,
+      NoteObj.time_stamp,
     ]
   );
-  // const newNoteObj = {
-  //   patient_id: 1,
-  //   carer_id: 1,
-  //   text_content: `This is a note`,
-  //   type_note: `Incident`,
-  //   time_of_input: `2023/01/12`,
-  //   has_been_seen: true,
-  // };
 
-  const newNoteObj = result.rows[0];
+ const newNoteObj = result.rows[0];
   return newNoteObj;
 }
