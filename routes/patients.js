@@ -4,6 +4,7 @@ import {
   getPatientByID,
   getNotesByPatientID,
 } from "../models/patients.js";
+
 import { validateAccessToken } from "../auth0-middleware.js";
 
 const router = Router();
@@ -13,7 +14,6 @@ router.post(
   "/:patient_id/notes",
   validateAccessToken,
   async function (req, res) {
-    // not sure if patient id needed
     const note = await addNote(req.body);
     res.json({
       success: true,
