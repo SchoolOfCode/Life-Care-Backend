@@ -1,9 +1,10 @@
 import { Router } from "express";
 import {
-  getNotesByPatientID,
-  getPatientByID,
   addNote,
+  getPatientByID,
+  getNotesByPatientID,
 } from "../models/patients.js";
+
 import { validateAccessToken } from "../auth0-middleware.js";
 
 const router = Router();

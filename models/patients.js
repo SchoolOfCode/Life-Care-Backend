@@ -62,15 +62,7 @@ export async function addNote(NoteObj) {
       NoteObj.time_stamp,
     ]
   );
-  // const newNoteObj = {
-  //   patient_id: 1,
-  //   carer_id: 1,
-  //   text_content: `This is a note`,
-  //   type_note: `Incident`,
-  //   time_of_input: `2023/01/12`,
-  //   has_been_seen: true,
-  // };
 
-  const newNoteObj = result.rows[0];
+ const newNoteObj = result.rows[0];
   return newNoteObj;
 }
