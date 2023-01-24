@@ -2,11 +2,9 @@
 
 This repo contains a Rest API that we built to interact with our front end. It contains the models to interact with the database and the routes with the endpoints that the app uses.
 
-
 ## Deployment
 
 Life Care has been deployed [here](https://life-care.onrender.com/) on Render. Go check it out!
-
 
 ## Installation
 
@@ -28,21 +26,9 @@ To run the server
   npm run dev
 ```
 
-    
 ## API Reference
 
-| HTTP REQUEST | Endpoint | Parameter | Type     | Description    |
-| :-------- | | :--------  :-------- | :------- | :---------------|
-| GET |  /api/carers | `id`      | `integer` | Gets all carers | 
-| GET | /api/carer/id | `carer_id` | `integer` | Give's you one carer |
-| GET | /api/carer/id/patient | `carer_id` | `integer` | Gives you client assigned to that carer |
-| GET | /api/patient/id/notes | `patient_id` | `integer` | Gives you notes for client |
-| POST | /api/patient/id/notes | `patient_id` | `integer` | Adds note to assigned client ID |
-
-
-
-
-
+![App Screenshot](https://i.imgur.com/ugs8t8z.png)
 
 ## Authors
 
