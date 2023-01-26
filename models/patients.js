@@ -13,15 +13,6 @@ export async function getPatientByID(id) {
 
 export async function getPatientsByCarerID(carer_id) {
   const results = await query(
-    // `SELECT *
-    // FROM patients
-    // LEFT JOIN carers
-    // ON patients.carer_id = carers.id
-    // WHERE carers.id = $1;`,
-    // [carer_id]
-
-    // !Below is SQL Query for if we use the junction table
-
     `SELECT pat.*
     FROM carer_patients AS cp
     JOIN patients AS pat 
@@ -39,7 +30,7 @@ export async function getNotesByPatientID(patient_id) {
     FROM notes 
     LEFT JOIN carers 
     ON notes.carer_id = carers.carer_id
-    WHERE carers.carer_id = $1
+    WHERE patient_id = $1
     ORDER BY note_id DESC;`,
     [patient_id]
   );
@@ -52,11 +43,11 @@ export async function getNotesByPatientID(patient_id) {
  */
 export async function addNote(NoteObj) {
   const result = await query(
-    `INSERT INTO notes (patient_id, carer_id, content, incidents, additional, time_stamp) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+    `INSERT INTO notes (patient_id, carer_id, overview, incidents, additional, time_stamp) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
     [
       NoteObj.patient_id,
       NoteObj.carer_id,
-      NoteObj.content,
+      NoteObj.overview,
       NoteObj.incidents,
       NoteObj.additional,
       NoteObj.time_stamp,
